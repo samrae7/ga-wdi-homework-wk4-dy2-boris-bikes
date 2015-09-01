@@ -17,4 +17,14 @@ describe DockingStation do
     expect(station.bike_count).to eq 1
   end
 
+  it 'should be able to release a bike' do
+    station = DockingStation.new
+    bike = Bike.new
+
+    station.dock(bike)
+    station.release(bike)
+
+    expect(station.bike_count).to eq 0
+  end
+
 end

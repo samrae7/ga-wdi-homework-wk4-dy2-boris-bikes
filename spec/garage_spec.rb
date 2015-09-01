@@ -3,7 +3,7 @@ require_relative './spec_helper'
 describe Garage do
 
   let(:bike) {Bike.new}
-  let(:garage) {Garage.new}
+  let(:garage) {Garage.new (25)}
   let(:van) {Van.new (15)}
 
   it 'should be empty after we instantiate it' do
@@ -37,7 +37,15 @@ describe Garage do
     expect(van.bike_count).to eq 1
   end
 
+  it 'should fix bikes' do
+    garage.fix_bike bike   
+    expect(bike.broken?).to eq false  
+  end
 
+  it 'should stop accepting bikes when it is full' do
+    25.times {garage.accept_bike_from_van(Bike.new, van)}
+    expect {garage.accept_bike_from_van(bike, van)}.to raise_error 'Garage is full'
+  end
 
 
 end

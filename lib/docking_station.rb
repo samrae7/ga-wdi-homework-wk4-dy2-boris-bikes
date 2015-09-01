@@ -30,11 +30,14 @@ class DockingStation
   end
 
   def release_bike_to_van (bike,van)
+    raise "This bike isn't broken. It should stay at the station" if  !bike.broken?
     van.accept_bike bike
     release bike
   end
 
   def accept_bike_from_van (bike,van)
+    raise 'This bike is still broken. Take it to the garage to get it fixed.' if bike.broken?
+    raise 'Station is full' if full?
     dock bike
     van.release_bike bike
   end

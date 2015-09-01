@@ -33,7 +33,7 @@ describe DockingStation do
     expect(station.full?).to be true
   end
 
-  it 'should not accept a bike if it\'s full' do
+  it 'should not accept a bike being docked if station is full' do
     fill_station station
 
     expect{station.dock(bike)}.to raise_error 'Station is full'
@@ -50,6 +50,7 @@ describe DockingStation do
 
   it 'should decrease its number of bikes by one when it releases one to the van' do
     # van = Van.new (15)
+    bike.break
     station.dock(bike)
     station.release_bike_to_van(bike, van)
     expect(station.bike_count).to eq 0
@@ -57,6 +58,7 @@ describe DockingStation do
 
   it 'should increase number of bikes in van by one when it release a bike to the van' do
     # van = Van.new (15)
+    bike.break
     station.dock(bike)
     station.release_bike_to_van(bike, van)
     expect(van.bike_count).to eq 1
@@ -73,6 +75,24 @@ describe DockingStation do
     van.accept_bike bike
     station.accept_bike_from_van(bike, van)
     expect(van.bike_count).to eq 0
+  end
+
+  it 'should not accept a broken bike back from the van' do
+    bike.break
+    van.accept_bike bike
+    expect{station.accept_bike_from_van(bike,van)}.to raise_error 'This bike is still broken. Take it to the garage to get it fixed.'
+  end
+
+  it 'should not accept a bike back from the van if the station is full' do
+    fill_station station
+    van.accept_bike bike
+    expect{station.accept_bike_from_van(bike,van)}.to raise_error 'Station is full'
+  end
+
+  it 'should not release a bike to the van unless its broken' do
+    station.dock bike
+    expect{station.release_bike_to_van(bike,van)}.to raise_error "This bike isn't broken. It should stay at the station"
+
   end
 
 end

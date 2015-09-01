@@ -12,18 +12,21 @@ describe Garage do
   end
 
   it 'should increase its count of bikes when it accepts bikes from the van' do
+    bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike,van)
     expect(garage.bike_count).to eq 1
   end
 
   it 'should reduce number of bikes in the van by one when it accepts a bike from the van' do
+    bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
     expect(van.bike_count).to eq 0
   end
 
   it 'should decrease its count of bikes when it releases one to the van' do
+    bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
     garage.release_bike_to_van(bike, van)
@@ -31,6 +34,7 @@ describe Garage do
   end
 
   it 'should increase number of bikes in the van when it releases a bike back to the van' do
+    bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
     garage.release_bike_to_van(bike,van)
@@ -43,10 +47,19 @@ describe Garage do
   end
 
   it 'should stop accepting bikes when it is full' do
-    25.times {garage.accept_bike_from_van(Bike.new, van)}
-    expect {garage.accept_bike_from_van(bike, van)}.to raise_error 'Garage is full'
+      25.times do
+        bike = Bike.new
+        bike.break
+        garage.accept_bike_from_van(bike, van)
+      end
+      expect {bike.break
+      garage.accept_bike_from_van(bike, van)}.to raise_error 'Garage is full'
   end
 
+  it 'should only accept broken bikes' do
+    bike.fix
+    expect {garage.accept_bike_from_van(bike,van)}.to raise_error "This bike isn't broken. Take it away"
+  end
 
 end
 

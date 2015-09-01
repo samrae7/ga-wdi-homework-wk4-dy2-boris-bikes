@@ -10,6 +10,7 @@ class Garage
   end
 
   def accept_bike_from_van(bike,van)
+    raise "This bike isn't broken. Take it away" if bike.broken? == false
     raise 'Garage is full' if @bikes.count==25
     @bikes << bike
     van.release_bike bike

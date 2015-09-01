@@ -7,12 +7,12 @@ describe Van do
   # let(:station) {DockingStation.new({capacity: 20})}
   
   it 'should be empty when initialized' do
-    expect(van.no_of_bikes).to eq 0
+    expect(van.bike_count).to eq 0
   end
 
   it 'should accept a bike' do 
     van.accept_bike bike
-    expect(van.no_of_bikes).to eq 1
+    expect(van.bike_count).to eq 1
   end
 
   # it 'should accept a bike from the garage' do
@@ -31,7 +31,7 @@ describe Van do
   it 'should release a bike' do
     van.accept_bike bike
     van.release_bike bike
-    expect(van.no_of_bikes).to eq 0
+    expect(van.bike_count).to eq 0
   end
 
   it 'should not accept bikes when full' do

@@ -20,7 +20,7 @@ describe Garage do
   it 'should reduce number of bikes in the van by one when it accepts a bike from the van' do
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
-    expect(van.no_of_bikes).to eq 0
+    expect(van.bike_count).to eq 0
   end
 
   it 'should decrease its count of bikes when it releases one to the van' do
@@ -34,7 +34,7 @@ describe Garage do
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
     garage.release_bike_to_van(bike,van)
-    expect(van.no_of_bikes).to eq 1
+    expect(van.bike_count).to eq 1
   end
 
 

@@ -29,6 +29,11 @@ class DockingStation
     @bikes.reject { |bike| bike.broken? }
   end
 
+  def release_bike_to_van (bike,van)
+    van.accept_bike bike
+    release bike
+  end
+
 end
 
 

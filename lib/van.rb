@@ -5,12 +5,12 @@ class Van
     @capacity = capacity
   end
 
-  def no_of_bikes
+  def bike_count
     @bikes.count
   end
 
   def accept_bike bike
-    raise 'Van is full' if no_of_bikes == @capacity
+    raise 'Van is full' if bike_count == @capacity
     @bikes<< bike
   end
 

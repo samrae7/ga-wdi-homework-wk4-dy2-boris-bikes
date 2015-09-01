@@ -47,6 +47,20 @@ describe DockingStation do
     expect(station.available_bikes).to eq [working_bike]
   end
 
+  it 'should decrease its number of bikes by one when it release one to the van' do
+    van = Van.new (15)
+    station.dock(bike)
+    station.release_bike_to_van(bike, van)
+    expect(station.bike_count).to eq 0
+  end
+
+  it 'should increase number of bikes in van by one when it release a bike to the van' do
+    van = Van.new (15)
+    station.dock(bike)
+    station.release_bike_to_van(bike, van)
+    expect(van.bike_count).to eq 1
+  end
+
 end
 
 

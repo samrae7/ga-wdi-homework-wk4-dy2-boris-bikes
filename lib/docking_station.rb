@@ -34,6 +34,11 @@ class DockingStation
     release bike
   end
 
+  def accept_bike_from_van (bike,van)
+    dock bike
+    van.release_bike bike
+  end
+
 end
 
 

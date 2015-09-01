@@ -14,8 +14,8 @@ class Garage
   end
 
   def release_bike_to_van (bike, van)
-    @bikes.delete(bike)
     van.accept_bike bike
+    @bikes.delete(bike)
   end
 
 end

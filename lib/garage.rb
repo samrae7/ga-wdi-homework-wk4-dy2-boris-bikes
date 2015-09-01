@@ -17,6 +17,7 @@ class Garage
   end
 
   def release_bike_to_van (bike, van)
+    raise "This bike isn't fixed yet. Leave it here" if bike.broken? == true
     van.accept_bike bike
     @bikes.delete(bike)
   end

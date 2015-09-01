@@ -29,6 +29,7 @@ describe Garage do
     bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
+    bike.fix
     garage.release_bike_to_van(bike, van)
     expect(garage.bike_count).to eq 0
   end
@@ -37,6 +38,7 @@ describe Garage do
     bike.break
     van.accept_bike bike
     garage.accept_bike_from_van(bike, van)
+    bike.fix
     garage.release_bike_to_van(bike,van)
     expect(van.bike_count).to eq 1
   end
@@ -52,13 +54,21 @@ describe Garage do
         bike.break
         garage.accept_bike_from_van(bike, van)
       end
-      expect {bike.break
-      garage.accept_bike_from_van(bike, van)}.to raise_error 'Garage is full'
+      expect do
+        bike.break
+        garage.accept_bike_from_van(bike, van)
+      end.to raise_error 'Garage is full'
   end
 
   it 'should only accept broken bikes' do
-    bike.fix
-    expect {garage.accept_bike_from_van(bike,van)}.to raise_error "This bike isn't broken. Take it away"
+    expect{garage.accept_bike_from_van(bike,van)}.to raise_error "This bike isn't broken. Take it away"
+  end
+
+  it 'should only release fixed bikes' do
+    bike.break
+    van.accept_bike bike
+    garage.accept_bike_from_van(bike,van)
+    expect{garage.release_bike_to_van(bike, van) }.to raise_error "This bike isn't fixed yet. Leave it here"
   end
 
 end
